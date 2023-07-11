@@ -90,8 +90,8 @@ def price_change(ticker):
     hist_rows = hist_table.find_all('tr')
     hist_recent = float(rm_commas(hist_rows[1].find_all('td')[4].get_text()))
     hist_6_months = float(rm_commas(hist_rows[-2].find_all('td')[4].get_text()))
-    return (hist_recent - hist_6_months)/hist_6_months
+    return int((hist_recent - hist_6_months)*100/hist_6_months)
 
 
 # print(earnings_est('CRWD'))
-print(price_change('CRWD'))
+# print(price_change('CRWD'))

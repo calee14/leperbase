@@ -64,25 +64,25 @@ def company_income(ticker):
     # quarters oldest to newest
     rev = tbl_rows[1].find_all('td')
     revq = [r.get_text() for r in rev][1:-1]
-    print(revq)
+    # print(revq)
 
     # calculate the rev growth yoy
     newq = rev_to_int(revq[4])
     oldq = rev_to_int(revq[0])
     rev_growth = round((newq - oldq) / oldq * 100)
-    print(rev_growth)
+    # print(rev_growth)
 
     # get eps data from table
     # quarters oldest to newest
     eps = tbl_rows[52].find_all('td')
     epsq = [r.get_text() for r in eps][1:-1]
-    print(epsq)
+    # print(epsq)
 
     # calculate eps growth yoy
     new_eps = eps_to_float(epsq[4])
     old_eps = eps_to_float(epsq[0])
     eps_growth = (new_eps - old_eps) / abs(old_eps)
-    print(eps_growth)
+    # print(eps_growth)
     
     return revq, rev_growth, epsq, eps_growth
     
