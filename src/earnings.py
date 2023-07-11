@@ -1,10 +1,15 @@
-import requests
 from bs4 import BeautifulSoup
+from income import rm_commas
+import datetime
+import requests
 
 # Set the headers to mimic a browser request
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36",
 }
+
+def custom_hist_table(tag):
+    return tag.name == 'table' and 'historical-prices' in tag.attrs.get('data-test', '')
 
 def percent_to_int(string):
     return round(int(string.split('.')[0]))
@@ -62,8 +67,31 @@ def earnings_est(ticker):
     
 
 def price_change(ticker):
+    '''
+    Returns price change (percentage) in the recent 6 months 
+    '''
+
+    current_time = datetime.datetime.today()
+    six_months_ago = (current_time - datetime.timedelta(days=30*6))
+    current_time = int(current_time.timestamp())
+    six_months_ago = int(six_months_ago.timestamp())
 
     # Set the URL of the page you want to scrape
-    url = f"https://finance.yahoo.com/quote/{ticker}/history?period1=1672963200&period2=1688601600&interval=1mo&filter=history&frequency=1mo&includeAdjustedClose=true"
+    url = f"https://finance.yahoo.com/quote/{ticker}/history?period1={six_months_ago}&period2={current_time}&interval=1wk&filter=history&frequency=1wk&includeAdjustedClose=true"
 
-earnings_est('CRWD')
+    # Send a GET request to the website with headers
+    response = requests.get(url, headers=headers)
+
+    # Parse the HTML content using BeautifulSoup
+    soup = BeautifulSoup(response.content, "html.parser")
+
+    hist_table = soup.find_all(custom_hist_table)[0]
+
+    hist_rows = hist_table.find_all('tr')
+    hist_recent = float(rm_commas(hist_rows[1].find_all('td')[4].get_text()))
+    hist_6_months = float(rm_commas(hist_rows[-2].find_all('td')[4].get_text()))
+    return (hist_recent - hist_6_months)/hist_6_months
+
+
+# print(earnings_est('CRWD'))
+print(price_change('CRWD'))
