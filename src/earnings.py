@@ -6,6 +6,9 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36",
 }
 
+def percent_to_int(string):
+    return round(int(string.split('.')[0]))
+
 def earnings_est(ticker):
 
     # Set the URL of the page you want to scrape
@@ -22,15 +25,27 @@ def earnings_est(ticker):
     
     # earnings estimate table
     earnings_rows = tables[0].find_all('tr')
-    print(earnings_rows[2])
+    
+    # print(earnings_rows[2])
 
     # revenue estimate table
     revenue_rows = tables[1].find_all('tr')
-    print(revenue_rows[2])
+    revenue_forecast = [r.get_text() for r in revenue_rows[2].find_all('td')]
+    # get revenue forecast for next quarter
+    rev_nq = revenue_forecast[1]
+    # get revenue forecast for full year (current fiscal year)
+    rev_end_yr = revenue_forecast[3]
+    print(rev_nq, rev_end_yr)
 
     # earnings report table
     report_rows = tables[2].find_all('tr')
-    print(report_rows[1])
+    # get eps estimate for the recent quarter
+    report_eps_est = report_rows[1].find_all('td')[-1].get_text()
+    # get eps actual for recent quarter
+    report_eps_act = report_rows[2].find_all('td')[-1].get_text()
+    # get eps surprise %
+    report_eps_surprise = report_rows[4].find_all('td')[-1].get_text()
+    print(report_eps_est, report_eps_act, percent_to_int(report_eps_surprise))
 
     
 
