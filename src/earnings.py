@@ -10,6 +10,12 @@ def percent_to_int(string):
     return round(int(string.split('.')[0]))
 
 def earnings_est(ticker):
+    '''
+    Returns tuple of size 3:
+    First element is a list of EPS forecast for next quarter and full year (current)
+    Second element is a list of Revenue forecast for next quarter and full year (current)
+    Third element is a list of EPS report for most recent quarter (estimate, actual, beat '%')
+    '''
 
     # Set the URL of the page you want to scrape
     url = f"https://finance.yahoo.com/quote/{ticker}/analysis?p={ticker}"
@@ -25,8 +31,12 @@ def earnings_est(ticker):
     
     # earnings estimate table
     earnings_rows = tables[0].find_all('tr')
-    
-    # print(earnings_rows[2])
+    eps_forecast = [e.get_text() for e in earnings_rows[2].find_all('td')]
+    # get eps forecast for next quarter
+    eps_nq = eps_forecast[1]
+    # get eps forecast for full year (current fiscal year)
+    eps_end_yr = eps_forecast[3]
+    # print(eps_nq, eps_end_yr)
 
     # revenue estimate table
     revenue_rows = tables[1].find_all('tr')
@@ -35,7 +45,7 @@ def earnings_est(ticker):
     rev_nq = revenue_forecast[1]
     # get revenue forecast for full year (current fiscal year)
     rev_end_yr = revenue_forecast[3]
-    print(rev_nq, rev_end_yr)
+    # print(rev_nq, rev_end_yr)
 
     # earnings report table
     report_rows = tables[2].find_all('tr')
@@ -45,7 +55,9 @@ def earnings_est(ticker):
     report_eps_act = report_rows[2].find_all('td')[-1].get_text()
     # get eps surprise %
     report_eps_surprise = report_rows[4].find_all('td')[-1].get_text()
-    print(report_eps_est, report_eps_act, percent_to_int(report_eps_surprise))
+    # print(report_eps_est, report_eps_act, percent_to_int(report_eps_surprise))
+
+    return [eps_nq, eps_end_yr], [rev_nq, rev_end_yr], [report_eps_est, report_eps_act, percent_to_int(report_eps_surprise)]
 
     
 
