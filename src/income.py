@@ -44,7 +44,7 @@ def eps_to_float(num_str):
 
 def company_income(ticker):
     '''
-    Returns tuple of 4 elements: (list, int, list, int)
+    Returns tuple of 5 elements: (string, list, int, list, int)
     Revenue history, Revenue growth, EPS history, EPS growth
     '''
 
@@ -60,6 +60,10 @@ def company_income(ticker):
     fin_table = soup.find_all(custom_fin_table)[0]
     tbl_rows = fin_table.find_all('tr')
 
+    # get header row from table
+    header = tbl_rows[0].find_all('th')
+    report_date = header[-2].get_text()
+    
     # get revenue data from table
     # quarters oldest to newest
     rev = tbl_rows[1].find_all('td')
@@ -84,7 +88,7 @@ def company_income(ticker):
     eps_growth = (new_eps - old_eps) / abs(old_eps)
     # print(eps_growth)
     
-    return revq, rev_growth, epsq, eps_growth
+    return report_date, revq, rev_growth, epsq, eps_growth
     
 def company_fcf(ticker):
     '''
@@ -144,6 +148,6 @@ def company_ratios(ticker):
     return pegq, psq
 
 
-# company_income('CRWD')
+company_income('CRWD')
 # company_fcf('CRWD')
 # company_ratios('CRWD')
