@@ -3,5 +3,7 @@ class EarningsReport(object):
         self.eps_est = eps_report[0]
         self.eps_act = eps_report[1]
         self.eps_surprise = eps_report[2]
-        self.eps_forecast= ' '.join(eps_est)
-        self.rev_forecast = ' '.join(rev_est)
+        # calc eps growth: forecast eps next quarter v. quarter yoy
+        self.eps_forecast = 
+        # calc rev growth: forecast rev next quarter v. quarter yoy
+        self.rev_forecast = 
