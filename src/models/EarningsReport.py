@@ -11,7 +11,10 @@ def calculate_percentage_change(old, new):
     return int(percentage_change)
 
 class EarningsReport(object):
-    def __init__(self, eps_est, eps_prior, rev_est, rev_prior, eps_report, price_delta):
+    def __init__(self):
+        pass
+
+    def load_data(self, eps_est, eps_prior, rev_est, rev_prior, eps_report, price_delta):
         self.eps_est = eps_report[0]
         self.eps_act = eps_report[1]
         self.eps_surprise = eps_report[2]
@@ -32,5 +35,16 @@ class EarningsReport(object):
         # calc price change over past 6 months
         self.price_delta = price_delta
 
+    @classmethod
+    def load_json(cls, j):
+        new_class = cls()
+        new_class.esp_est = j['eps_est']
+        new_class.eps_act = j['eps_act']
+        new_class.eps_surprise = j['eps_surprise']
+        new_class.eps_growth_quarter_year_forecast = j['eps_growth_quarter_year_forecast']
+        new_class.rev_growth_quarter_year_forecast = j['rev_growth_quarter_year_forecast']
+        new_class.price_delta = j['price_delta']
+        return new_class
+    
     def __str__(self):
         return str(self.__dict__)

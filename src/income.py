@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from util import get_site
+from util.get_site import get_site
 import requests
 import config
 import csv
