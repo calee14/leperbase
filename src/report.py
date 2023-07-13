@@ -25,7 +25,7 @@ def build_report(ticker):
                                     eps_report, price_delta)
     
     report = CompanyReport(report_date, earnings_report, income_report)
-    print(income_report)
+    print(earnings_report)
 
 
 
