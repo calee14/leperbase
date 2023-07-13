@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from income import rm_commas
+from util import get_site
 import datetime
 import requests
 
@@ -26,7 +27,7 @@ def earnings_est(ticker):
     url = f"https://finance.yahoo.com/quote/{ticker}/analysis?p={ticker}"
 
     # Send a GET request to the website with headers
-    response = requests.get(url, headers=headers)
+    response = get_site(url)
 
     # Parse the HTML content using BeautifulSoup
     soup = BeautifulSoup(response.content, "html.parser")
@@ -80,7 +81,7 @@ def price_change(ticker):
     url = f"https://finance.yahoo.com/quote/{ticker}/history?period1={six_months_ago}&period2={current_time}&interval=1wk&filter=history&frequency=1wk&includeAdjustedClose=true"
 
     # Send a GET request to the website with headers
-    response = requests.get(url, headers=headers)
+    response = get_site(url, headers=headers)
 
     # Parse the HTML content using BeautifulSoup
     soup = BeautifulSoup(response.content, "html.parser")

@@ -1,8 +1,8 @@
+from bs4 import BeautifulSoup
+from util import get_site
 import requests
 import config
 import csv
-from bs4 import BeautifulSoup
-
 # Set the headers to mimic a browser request
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36",
@@ -51,7 +51,7 @@ def company_income(ticker):
     url = f"https://www.marketwatch.com/investing/stock/{ticker}/financials/income/quarter"
 
     # Send a GET request to the website with headers
-    response = requests.get(url, headers=headers)
+    response = get_site(url)
 
     # Parse the HTML content using BeautifulSoup
     soup = BeautifulSoup(response.content, "html.parser")
@@ -99,7 +99,7 @@ def company_fcf(ticker):
     url = f"https://www.marketwatch.com/investing/stock/{ticker}/financials/cash-flow/quarter"
 
     # Send a GET request to the website with headers
-    response = requests.get(url, headers=headers)
+    response = get_site(url)
 
     # Parse the HTML content using BeautifulSoup
     soup = BeautifulSoup(response.content, "html.parser")
@@ -127,7 +127,7 @@ def company_ratios(ticker):
     url = f"https://finance.yahoo.com/quote/{ticker}/key-statistics?p={ticker}"
 
     # Send a GET request to the website with headers
-    response = requests.get(url, headers=headers)
+    response = get_site(url)
 
     # Parse the HTML content using BeautifulSoup
     soup = BeautifulSoup(response.content, "html.parser")
@@ -147,7 +147,36 @@ def company_ratios(ticker):
 
     return pegq, psq
 
+def prior_annual_stats(ticker):
+    '''
+    Returns string
+    Previous fiscal annual revenue for _ticker 
+    '''
+    url = f"https://www.marketwatch.com/investing/stock/{ticker}/financials/income"
 
-company_income('CRWD')
+    # Send a GET request to the website with headers
+    response = get_site(url)
+
+    # Parse the HTML content using BeautifulSoup
+    soup = BeautifulSoup(response.content, "html.parser")
+
+    # find table with custom attributes
+    fin_table = soup.find_all(custom_fin_table)[0]
+    tbl_rows = fin_table.find_all('tr')
+
+    # get revenue of last fiscal year from table
+    rev = tbl_rows[1].find_all('td')
+    revy = [r.get_text() for r in rev][-2]
+
+    # get eps data from table
+    # quarters oldest to newest
+    eps = tbl_rows[52].find_all('td')
+    epsy = strip_parentheses([r.get_text() for r in eps][-2])
+
+    return revy, epsy
+
+
+# company_income('CRWD')
 # company_fcf('CRWD')
 # company_ratios('CRWD')
+# prior_annual_stats('CRWD')
