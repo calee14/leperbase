@@ -15,13 +15,17 @@ def build_report(ticker):
     eps_est, rev_est, eps_report = earnings_est(ticker)
     price_delta = price_change(ticker)
 
-    income_report = {}
-    income_report['report_date'] = report_date
+    income_report = IncomeReport(revq, rev_growth, 
+                                 epsq, eps_growth, fcfq, fcf_growth, pegq, psq)
 
+    # build earnings report, calc forecast percentage change
+    # by using getting last fiscal year's eps and rev
     earnings_report = EarningsReport(eps_est, [epsq[-1], epsy],
-                                    rev_est, [revq[-1], revy],
+                                    rev_est, [revq[1], revy],
                                     eps_report, price_delta)
-    print(earnings_report)
+    
+    report = CompanyReport(report_date, earnings_report, income_report)
+    print(income_report)
 
 
 
