@@ -1,4 +1,6 @@
 from models.CompanyReport import CompanyReport
+from models.EarningsReport import EarningsReport
+from models.IncomeReport import IncomeReport
 import json
 import os
 import shutil
@@ -42,3 +44,18 @@ def store_report(report: CompanyReport):
         # Cleanup the temporary file if it exists
         if os.path.exists('temp_snapshot.json'):
             os.remove('temp_snapshot.json')
+
+def get_report(ticker) -> CompanyReport:
+    '''
+    Returns CompanyReport of most recent report for a ticker.
+    '''
+    with open('snapshot.json', 'r') as f:
+        snapshots = json.load(f)
+
+    if ticker not in snapshots:
+        return CompanyReport(ticker, None, None, None)
+    
+    report_json = snapshots[ticker]['reports'][-1]
+    return CompanyReport(ticker, report_json['date'], 
+                         IncomeReport.load_json(report_json['income_report']),
+                         EarningsReport.load_json(report_json['earnings_report']))

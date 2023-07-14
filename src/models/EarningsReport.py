@@ -38,7 +38,7 @@ class EarningsReport(object):
     @classmethod
     def load_json(cls, j):
         new_class = cls()
-        new_class.esp_est = j['eps_est']
+        new_class.eps_est = j['eps_est']
         new_class.eps_act = j['eps_act']
         new_class.eps_surprise = j['eps_surprise']
         new_class.eps_growth_quarter_year_forecast = j['eps_growth_quarter_year_forecast']
