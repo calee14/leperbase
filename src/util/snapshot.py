@@ -29,7 +29,7 @@ def store_report(report: CompanyReport):
     try:
         # Write JSON data to a temporary file
         with open('temp_snapshot.json', "w") as temp_file:
-            json.dump(snapshots, temp_file)
+            json.dump(snapshots, temp_file, indent=2)
 
         # Replace the original file with the temporary file
         shutil.move('temp_snapshot.json', 'snapshot.json')
@@ -42,5 +42,3 @@ def store_report(report: CompanyReport):
         # Cleanup the temporary file if it exists
         if os.path.exists('temp_snapshot.json'):
             os.remove('temp_snapshot.json')
-    # with open('snapshot.json', 'w') as file:
-    #     json.dump(snapshots, file, indent=2)
