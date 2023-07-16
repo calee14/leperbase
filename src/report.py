@@ -3,9 +3,13 @@ from income import *
 from models import *
 from util.snapshot import store_report, get_report
 import time
+import csv
 
-def build_report(ticker):
-
+def build_report(ticker) -> CompanyReport:
+    '''
+    Run scraper functions to build report and store
+    it into json file.
+    '''
     # income financial report
     report_date, revq, rev_growth, epsq, eps_growth = company_income(ticker)
     fcfq, fcf_growth = company_fcf(ticker)
@@ -34,9 +38,20 @@ def build_report(ticker):
 
     return report
 
-def make_print_report(tickers):
-    for ticker in ticker:
-        pass
+def report_csv(reports: list[CompanyReport]):
+
+    # open the file in write mode and create a CSV writer object
+    with open('report.csv', 'w', newline='') as file:
+        writer = csv.writer(file)
+        
+
+def make_print_report(tickers: list[str]):
+    reports: list[CompanyReport] = []
+    for ticker in tickers:
+        # builds report for ticker
+        report: CompanyReport = build_report(ticker)
+        reports.append(report) 
+        
 def test_store():
     income_report = {'revq': '487.83M -> 535.15M -> 580.88M -> 637.37M -> 692.58M', 'rev_growth': 42, 'epsq': '-0.14 -> -0.21 -> -0.24 -> -0.2 -> 0.0', 'eps_growth': 1.0, 'fcfq': '159.74M -> 138.25M -> 176.41M -> 212.85M -> 230.93M', 'fcf_growth': 45, 'pegq': '1.61 <- 1.22 <- 2.19 <- 3.79 <- 4.63', 'psq': '12.49 <- 12.06 <- 20.25 <- 25.68 <- 31.10'}
     earnings_report = {'eps_est': '0.51', 'eps_act': '0.57', 'eps_surprise': 11, 'eps_growth_quarter_year_forecast': [55900, 402], 'rev_growth_quarter_year_forecast': [35, 35], 'price_delta': 46}
@@ -46,12 +61,13 @@ def test_store():
 
     store_report(report)
     
-    get_report('CRWD').income_report.rev_growth
+    report_csv([report])
 
 print('start')
 start = time.time()
 # build_report('CRWD')
 test_store()
+# make_print_report(['CRWD'])
 end = time.time()
 print('finished')
 print('program took:',(end - start) * 1000, 'milliseconds')

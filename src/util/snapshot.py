@@ -6,6 +6,9 @@ import os
 import shutil
 
 def store_report(report: CompanyReport):
+    '''
+    Stores a CompanyReport object into the snapshot.json file
+    '''
     if not os.path.exists('snapshot.json'):
         with open('snapshot.json', 'w') as file:
             json.dump({}, file)

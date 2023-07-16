@@ -3,7 +3,7 @@
     "reports": [
       {
         "ticker": "CRWD",
-        "date": "yesterday",
+        "date": "30-Apr-2023",
         "income_report": {
           "revq": "487.83M -> 535.15M -> 580.88M -> 637.37M -> 692.58M",
           "rev_growth": 42,
@@ -26,7 +26,7 @@
             35,
             35
           ],
-          "price_delta": 46
+          "price_delta": 44
         }
       },
       {
