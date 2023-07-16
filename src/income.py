@@ -86,7 +86,7 @@ def company_income(ticker):
     # calculate eps growth yoy
     new_eps = eps_to_float(epsq[4])
     old_eps = eps_to_float(epsq[0])
-    eps_growth = (new_eps - old_eps) / abs(old_eps)
+    eps_growth = round((new_eps - old_eps) * 100 / abs(old_eps))
     # print(eps_growth)
     
     return report_date, revq, rev_growth, epsq, eps_growth
