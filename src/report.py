@@ -69,6 +69,8 @@ def report_csv(reports: list[CompanyReport]):
 
     income_df.to_excel('income_report.xlsx', index=False)
 
+    
+
 def make_print_report(tickers: list[str]):
     reports: list[CompanyReport] = []
     for ticker in tickers:
