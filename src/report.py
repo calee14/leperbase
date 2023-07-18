@@ -67,8 +67,36 @@ def report_csv(reports: list[CompanyReport]):
     
     income_df = pd.DataFrame(income_data)
 
-    income_df.to_excel('income_report.xlsx', index=False)
+    writer = pd.ExcelWriter('report.xlsx', engine='xlsxwriter')
+    
+    income_df.to_excel(writer, 
+                       sheet_name='IncomeReport',
+                       index=False)
+    for col in income_df:
+        col_len = max(income_df[col].astype(str).map(len).max(), len(col))
+        col_idx = income_df.columns.get_loc(col)
+        writer.sheets['IncomeReport'].set_column(col_idx, col_idx, col_len)
 
+    # Access the workbook and worksheet objects
+    workbook = writer.book
+    worksheet = writer.sheets['IncomeReport']
+
+    # Write the DataFrame to the worksheet with header formatting
+    header_format = workbook.add_format({'bold': False})
+    for col_num, value in enumerate(income_df.columns):
+        worksheet.write(0, col_num, value, header_format)
+
+    # Define cell formats for alternating row colors
+    even_format = workbook.add_format({'bg_color': '#F4F9F8', 'align':'center', 'border': 1, 'border_color': '#929292'})
+    odd_format = workbook.add_format({'bg_color': '#FFFFFF', 'align': 'center', 'border': 1, 'border_color': '#929292'})
+
+    # Apply alternating row colors by iterating through rows
+    for i, row in income_df.iterrows():
+        row_format = even_format if i % 2 == 0 else odd_format
+        for j, value in enumerate(row):
+            worksheet.write(i+1, j, value, row_format)
+
+    workbook.close()
     
 
 def make_print_report(tickers: list[str]):
