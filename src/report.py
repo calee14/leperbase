@@ -44,6 +44,7 @@ def report_csv(reports: list[CompanyReport]):
     income_df = pd.DataFrame(columns=['Revenue', 'Rev. Growth', 'Earnings', 'EPS Growth', 'FCF', 'FCF Growth', 'Price/Earnings/Growth', 'Price/Sales'])
     
     income_data = {
+        'Ticker': [],
         'Revenue': [], 
         'Rev. Growth': [], 
         'Earnings': [], 
@@ -55,6 +56,7 @@ def report_csv(reports: list[CompanyReport]):
     }
 
     earnings_data = {
+        'Ticker': [],
         'EPS Estimate': [],
         'EPS Actual': [],
         'EPS Surprise': [],
@@ -67,6 +69,7 @@ def report_csv(reports: list[CompanyReport]):
     for report in reports:
         # build the income report
         income_report = report.income_report
+        income_data['Ticker'].append(report.ticker)
         income_data['Revenue'].append(income_report.revq)
         income_data['Rev. Growth'].append(income_report.rev_growth)
         income_data['Earnings'].append(income_report.epsq)
@@ -78,6 +81,7 @@ def report_csv(reports: list[CompanyReport]):
         
         # build the earnings report
         earnings_report = report.earnings_report
+        earnings_data['Ticker'].append(report.ticker)
         earnings_data['EPS Estimate'].append(earnings_report.eps_est)
         earnings_data['EPS Actual'].append(earnings_report.eps_act)
         earnings_data['EPS Surprise'].append(earnings_report.eps_surprise)
