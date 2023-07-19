@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup
-from util.get_site import get_site
+from util import *
+# from util.get_site import get_site
+# from util.process import rev_to_int, strip_parentheses, eps_to_float
 import requests
 import config
 import csv
@@ -9,42 +11,12 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36",
 }
 
+
 def custom_fin_table(tag):
     return tag.name == 'table' and 'Financials - data table' in tag.attrs.get('aria-label', '')
 
 def custom_fcf_table(tag):
     return tag.name == 'table' and 'Financials - Financing Activities data table' in tag.attrs.get('aria-label', '')
-
-def strip_parentheses(string):
-    if string.startswith('(') and string.endswith(')'):
-        return '-' + string.strip('()')
-    return string
-
-def rm_commas_parentheses(string):
-    return strip_parentheses(rm_commas(string))
-
-def rm_commas(string):
-    return string.replace(',', '')
-
-def rev_to_int(num_str):
-    num_str = rm_commas(strip_parentheses(num_str))
-    multipliers = {
-        'M': 1_000_000, 
-        'B': 1_000_000_000, 
-        'T': 1_000_000_000_000
-    
-    }
-    suffix = num_str[-1]
-    num = float(num_str[:-1])
-
-    if suffix in multipliers:
-        num *= multipliers[suffix]
-
-    return int(num)
-
-def eps_to_float(num_str):
-    num_str = rm_commas(strip_parentheses(num_str))
-    return float(num_str)
 
 def company_income(ticker):
     '''

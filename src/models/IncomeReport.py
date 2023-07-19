@@ -1,4 +1,4 @@
-from income import eps_to_float
+from util.process import eps_to_float
 
 class IncomeReport(object):
     def __init__(self):
