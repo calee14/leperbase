@@ -46,11 +46,11 @@ def report_csv(reports: list[CompanyReport]):
     income_data = {
         'Ticker': [],
         'Revenue': [], 
-        'Rev. Growth': [], 
+        'Rev. Growth (%)': [], 
         'Earnings': [], 
-        'EPS Growth': [], 
+        'EPS Growth (%)': [], 
         'FCF': [], 
-        'FCF Growth': [], 
+        'FCF Growth (%)': [], 
         'Price/Earnings/Growth': [], 
         'Price/Sales': []
     }
@@ -59,9 +59,9 @@ def report_csv(reports: list[CompanyReport]):
         'Ticker': [],
         'EPS Estimate': [],
         'EPS Actual': [],
-        'EPS Surprise': [],
-        'EPS Growth Quarter and Year Forecast': [],
-        'Revenue Growth Quarter and Year Forecast': [],
+        'EPS Surprise (%)': [],
+        'EPS Growth Quarter and Year Forecast (%)': [],
+        'Revenue Growth Quarter and Year Forecast (%)': [],
         'Price Delta': []
     }
 
@@ -71,11 +71,11 @@ def report_csv(reports: list[CompanyReport]):
         income_report = report.income_report
         income_data['Ticker'].append(report.ticker)
         income_data['Revenue'].append(income_report.revq)
-        income_data['Rev. Growth'].append(income_report.rev_growth)
+        income_data['Rev. Growth (%)'].append(income_report.rev_growth)
         income_data['Earnings'].append(income_report.epsq)
-        income_data['EPS Growth'].append(income_report.eps_growth)
+        income_data['EPS Growth (%)'].append(income_report.eps_growth)
         income_data['FCF'].append(income_report.fcfq)
-        income_data['FCF Growth'].append(income_report.fcf_growth)
+        income_data['FCF Growth (%)'].append(income_report.fcf_growth)
         income_data['Price/Earnings/Growth'].append(income_report.pegq)
         income_data['Price/Sales'].append(income_report.psq)
         
@@ -84,17 +84,19 @@ def report_csv(reports: list[CompanyReport]):
         earnings_data['Ticker'].append(report.ticker)
         earnings_data['EPS Estimate'].append(earnings_report.eps_est)
         earnings_data['EPS Actual'].append(earnings_report.eps_act)
-        earnings_data['EPS Surprise'].append(earnings_report.eps_surprise)
-        earnings_data['EPS Growth Quarter and Year Forecast'].append(earnings_report.eps_growth_quarter_year_forecast)
-        earnings_data['Revenue Growth Quarter and Year Forecast'].append(earnings_report.rev_growth_quarter_year_forecast)
+        earnings_data['EPS Surprise (%)'].append(earnings_report.eps_surprise)
+        earnings_data['EPS Growth Quarter and Year Forecast (%)'].append(earnings_report.eps_growth_quarter_year_forecast)
+        earnings_data['Revenue Growth Quarter and Year Forecast (%)'].append(earnings_report.rev_growth_quarter_year_forecast)
         earnings_data['Price Delta'].append(earnings_report.price_delta)
     
+    # make dataframe of data
     income_df = pd.DataFrame(income_data)
-    print(earnings_data)
     earnings_df = pd.DataFrame(earnings_data)
 
+    # make the pandas excel writer
     writer = pd.ExcelWriter('report.xlsx', engine='xlsxwriter')
-    
+
+    # write dataframes to xcel sheets in the xlsx file
     income_df.to_excel(writer, 
                        sheet_name='IncomeReport',
                        index=False)
@@ -102,11 +104,11 @@ def report_csv(reports: list[CompanyReport]):
                          sheet_name='EarningsReport',
                          index=False)
     
+    # change each col size to squish them a little
     for col in income_df:
         col_len = max(income_df[col].astype(str).map(len).max() / 2, len(col))
         col_idx = income_df.columns.get_loc(col)
         writer.sheets['IncomeReport'].set_column(col_idx, col_idx, col_len)
-
     for col in earnings_df:
         col_len = max(earnings_df[col].astype(str).map(len).max() / 2, len(col))
         col_idx = earnings_df.columns.get_loc(col)
