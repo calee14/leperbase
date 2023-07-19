@@ -53,8 +53,19 @@ def report_csv(reports: list[CompanyReport]):
         'Price/Earnings/Growth': [], 
         'Price/Sales': []
     }
+
+    earnings_data = {
+        'EPS Estimate': [],
+        'EPS Actual': [],
+        'EPS Surprise': [],
+        'EPS Growth Quarter and Year Forecast': [],
+        'Revenue Growth Quarter and Year Forecast': [],
+        'Price Delta': []
+    }
+
     # build the income and earning reports for all companies
     for report in reports:
+        # build the income report
         income_report = report.income_report
         income_data['Revenue'].append(income_report.revq)
         income_data['Rev. Growth'].append(income_report.rev_growth)
@@ -64,32 +75,57 @@ def report_csv(reports: list[CompanyReport]):
         income_data['FCF Growth'].append(income_report.fcf_growth)
         income_data['Price/Earnings/Growth'].append(income_report.pegq)
         income_data['Price/Sales'].append(income_report.psq)
+        
+        # build the earnings report
+        earnings_report = report.earnings_report
+        earnings_data['EPS Estimate'].append(earnings_report.eps_est)
+        earnings_data['EPS Actual'].append(earnings_report.eps_act)
+        earnings_data['EPS Surprise'].append(earnings_report.eps_surprise)
+        earnings_data['EPS Growth Quarter and Year Forecast'].append(earnings_report.eps_growth_quarter_year_forecast)
+        earnings_data['Revenue Growth Quarter and Year Forecast'].append(earnings_report.rev_growth_quarter_year_forecast)
+        earnings_data['Price Delta'].append(earnings_report.price_delta)
     
     income_df = pd.DataFrame(income_data)
+    print(earnings_data)
+    earnings_df = pd.DataFrame(earnings_data)
 
     writer = pd.ExcelWriter('report.xlsx', engine='xlsxwriter')
     
     income_df.to_excel(writer, 
                        sheet_name='IncomeReport',
                        index=False)
+    earnings_df.to_excel(writer,
+                         sheet_name='EarningsReport',
+                         index=False)
+    
     for col in income_df:
         col_len = max(income_df[col].astype(str).map(len).max() / 2, len(col))
         col_idx = income_df.columns.get_loc(col)
         writer.sheets['IncomeReport'].set_column(col_idx, col_idx, col_len)
 
+    for col in earnings_df:
+        col_len = max(earnings_df[col].astype(str).map(len).max() / 2, len(col))
+        col_idx = earnings_df.columns.get_loc(col)
+        writer.sheets['EarningsReport'].set_column(col_idx, col_idx, col_len)
+
     # Access the workbook and worksheet objects
     workbook = writer.book
-    worksheet = writer.sheets['IncomeReport']
+    income_worksheet = writer.sheets['IncomeReport']
+    earnings_worksheet = writer.sheets['EarningsReport']
     
-    # Change row heights for sheet
+    # Change row heights for sheets
     # Change the row height
-    worksheet.set_default_row(30)  # Set the default row height to 20 (in pixels)
-    worksheet.set_row(0, 20) 
+    income_worksheet.set_default_row(30)  # Set the default row height to 20 (in pixels)
+    income_worksheet.set_row(0, 20) 
+    earnings_worksheet.set_default_row(30)  # Set the default row height to 20 (in pixels)
+    earnings_worksheet.set_row(0, 20) 
 
     # Write the DataFrame to the worksheet with header formatting
     header_format = workbook.add_format({'bold': False})
     for col_num, value in enumerate(income_df.columns):
-        worksheet.write(0, col_num, value, header_format)
+        income_worksheet.write(0, col_num, value, header_format)
+    for col_num, value in enumerate(earnings_df.columns):
+        earnings_worksheet.write(0, col_num, value, header_format)
 
     # Define cell formats for alternating row colors
     even_format = workbook.add_format({'bg_color': '#F4F9F8', 'align':'left', 'valign': 'vcenter', 'border': 1, 'border_color': '#929292', 'text_wrap': True})
@@ -99,7 +135,11 @@ def report_csv(reports: list[CompanyReport]):
     for i, row in income_df.iterrows():
         row_format = even_format if i % 2 == 0 else odd_format
         for j, value in enumerate(row):
-            worksheet.write(i+1, j, value, row_format)
+            income_worksheet.write(i+1, j, value, row_format)
+    for i, row in earnings_df.iterrows():
+        row_format = even_format if i % 2 == 0 else odd_format
+        for j, value in enumerate(row):
+            earnings_worksheet.write(i+1, j, value, row_format)
 
     workbook.close()
     
@@ -113,7 +153,7 @@ def make_print_report(tickers: list[str]):
         
 def test_store():
     income_report = {'revq': '487.83M -> 535.15M -> 580.88M -> 637.37M -> 692.58M', 'rev_growth': 42, 'epsq': '-0.14 -> -0.21 -> -0.24 -> -0.2 -> 0.0', 'eps_growth': 100, 'fcfq': '159.74M -> 138.25M -> 176.41M -> 212.85M -> 230.93M', 'fcf_growth': 45, 'pegq': '1.61 <- 1.22 <- 2.19 <- 3.79 <- 4.63', 'psq': '12.49 <- 12.06 <- 20.25 <- 25.68 <- 31.10'}
-    earnings_report = {'eps_est': '0.51', 'eps_act': '0.57', 'eps_surprise': 11, 'eps_growth_quarter_year_forecast': [55900, 402], 'rev_growth_quarter_year_forecast': [35, 35], 'price_delta': 46}
+    earnings_report = {'eps_est': '0.51', 'eps_act': '0.57', 'eps_surprise': 11, 'eps_growth_quarter_year_forecast': '55900, 402', 'rev_growth_quarter_year_forecast': '35, 35', 'price_delta': 47}
 
     report = CompanyReport('CRWD', 'today', IncomeReport.load_json(income_report), EarningsReport.load_json(earnings_report))
     # print(report)

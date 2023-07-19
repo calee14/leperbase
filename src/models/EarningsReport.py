@@ -23,15 +23,15 @@ class EarningsReport(object):
         eps_est = [float(eps) for eps in eps_est]
         eps_prior = [float(eps) for eps in eps_prior]
         # eps_forecast = [next quarter growth yoy, end of year growth yoy]
-        self.eps_growth_quarter_year_forecast = [calculate_percentage_change(eps_prior[0], eps_est[0]),
-                             calculate_percentage_change(eps_prior[1], eps_est[1])]
+        self.eps_growth_quarter_year_forecast = ', '.join([str(calculate_percentage_change(eps_prior[0], eps_est[0])),
+                             str(calculate_percentage_change(eps_prior[1], eps_est[1]))])
         # calc rev growth: forecast rev next quarter v. quarter yoy
         # and also forecast end of year rev v. last fiscal year rev
         rev_est = [rev_to_int(rev) for rev in rev_est]
         rev_prior = [rev_to_int(rev) for rev in rev_prior]
         # rev_forecast = [next quarter growth yoy, end of year growth yoy]
-        self.rev_growth_quarter_year_forecast = [calculate_percentage_change(rev_prior[0], rev_est[0]),
-                             calculate_percentage_change(rev_prior[1], rev_est[1])]
+        self.rev_growth_quarter_year_forecast = ', '.join([str(calculate_percentage_change(rev_prior[0], rev_est[0])),
+                             str(calculate_percentage_change(rev_prior[1], rev_est[1]))])
         # calc price change over past 6 months
         self.price_delta = price_delta
 
