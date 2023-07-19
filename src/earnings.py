@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
-from src.util.get_site import get_site
-from src.util.process import rm_commas_parentheses, rm_commas
+from .util.get_site import get_site
+from .util.process import rm_commas_parentheses, rm_commas
 import datetime
 import requests
 

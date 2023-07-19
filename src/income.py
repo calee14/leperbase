@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from src.util import *
+from .util import *
 # from util.get_site import get_site
 # from util.process import rev_to_int, strip_parentheses, eps_to_float
 import requests
@@ -151,7 +151,7 @@ def prior_annual_stats(ticker):
     return revy, epsy
 
 
-# company_income('CRWD')
+company_income('CRWD')
 # company_fcf('CRWD')
 # company_ratios('CRWD')
 # prior_annual_stats('CRWD')
