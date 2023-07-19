@@ -1,9 +1,8 @@
 from bs4 import BeautifulSoup
-from util import *
+from src.util import *
 # from util.get_site import get_site
 # from util.process import rev_to_int, strip_parentheses, eps_to_float
 import requests
-import config
 import csv
 
 # Set the headers to mimic a browser request

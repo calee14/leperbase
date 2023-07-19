@@ -1,4 +1,4 @@
-from models.EarningsReport import EarningsReport
-from models.IncomeReport import IncomeReport
-from models.CompanyReport import CompanyReport
+from src.models.EarningsReport import EarningsReport
+from src.models.IncomeReport import IncomeReport
+from src.models.CompanyReport import CompanyReport
 print('hit init models')

@@ -1,6 +1,6 @@
-from models.CompanyReport import CompanyReport
-from models.EarningsReport import EarningsReport
-from models.IncomeReport import IncomeReport
+from src.models.CompanyReport import CompanyReport
+from src.models.EarningsReport import EarningsReport
+from src.models.IncomeReport import IncomeReport
 import json
 import os
 import shutil

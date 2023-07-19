@@ -1,4 +1,4 @@
-from models import *
+from src.models import *
 class CompanyReport(object):
     def __init__(self, ticker, date ,income_report: IncomeReport, earnings_report: EarningsReport):
         self.ticker = ticker

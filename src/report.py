@@ -1,7 +1,7 @@
-from earnings import *
-from income import *
-from models import *
-from util import *
+from src.earnings import *
+from src.income import *
+from src.models import *
+from src.util import *
 # from util.snapshot import store_report, get_report
 import time
 import csv
@@ -185,7 +185,7 @@ def test_store():
 # start = time.time()
 # build_report('CRWD')
 # test_store()
-make_print_report(['CRWD'])
+make_print_report(['CRWD', 'RUN'])
 # end = time.time()
 # print('finished')
 # print('program took:',(end - start) * 1000, 'milliseconds')
