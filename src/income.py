@@ -20,6 +20,9 @@ def strip_parentheses(string):
         return '-' + string.strip('()')
     return string
 
+def rm_commas_parentheses(string):
+    return strip_parentheses(rm_commas(string))
+
 def rm_commas(string):
     return string.replace(',', '')
 
@@ -80,7 +83,7 @@ def company_income(ticker):
     # get eps data from table
     # quarters oldest to newest
     eps = tbl_rows[52].find_all('td')
-    epsq = [r.get_text() for r in eps][1:-1]
+    epsq = [strip_parentheses(r.get_text()) for r in eps][1:-1]
     # print(epsq)
 
     # calculate eps growth yoy

@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from income import rm_commas
+from income import rm_commas, rm_commas_parentheses
 from util.get_site import get_site
 import datetime
 import requests
@@ -39,9 +39,9 @@ def earnings_est(ticker):
     earnings_rows = tables[0].find_all('tr')
     eps_forecast = [e.get_text() for e in earnings_rows[2].find_all('td')]
     # get eps forecast for next quarter
-    eps_nq = eps_forecast[1]
+    eps_nq = rm_commas_parentheses(eps_forecast[1])
     # get eps forecast for full year (current fiscal year)
-    eps_end_yr = eps_forecast[3]
+    eps_end_yr = rm_commas_parentheses(eps_forecast[3])
     # print(eps_nq, eps_end_yr)
 
     # revenue estimate table

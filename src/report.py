@@ -39,7 +39,7 @@ def build_report(ticker) -> CompanyReport:
 
     return report
 
-def report_csv(reports: list[CompanyReport]):
+def report_xlsx(reports: list[CompanyReport]):
 
     income_df = pd.DataFrame(columns=['Revenue', 'Rev. Growth', 'Earnings', 'EPS Growth', 'FCF', 'FCF Growth', 'Price/Earnings/Growth', 'Price/Sales'])
     
@@ -153,9 +153,20 @@ def report_csv(reports: list[CompanyReport]):
 def make_print_report(tickers: list[str]):
     reports: list[CompanyReport] = []
     for ticker in tickers:
+        # start timer
+        start = time.time()
         # builds report for ticker
         report: CompanyReport = build_report(ticker)
         reports.append(report) 
+        # end timer
+        end = time.time()
+        print(f'Scraping {ticker} took:', (end - start) * 1000, 'milliseconds')
+
+        # store the report after completing scrape
+        store_report(report)
+    
+    report_xlsx(reports)
+    
         
 def test_store():
     income_report = {'revq': '487.83M -> 535.15M -> 580.88M -> 637.37M -> 692.58M', 'rev_growth': 42, 'epsq': '-0.14 -> -0.21 -> -0.24 -> -0.2 -> 0.0', 'eps_growth': 100, 'fcfq': '159.74M -> 138.25M -> 176.41M -> 212.85M -> 230.93M', 'fcf_growth': 45, 'pegq': '1.61 <- 1.22 <- 2.19 <- 3.79 <- 4.63', 'psq': '12.49 <- 12.06 <- 20.25 <- 25.68 <- 31.10'}
@@ -166,13 +177,13 @@ def test_store():
 
     store_report(report)
     
-    report_csv([report])
+    report_xlsx([report])
 
 print('start')
 start = time.time()
 # build_report('CRWD')
-test_store()
-# make_print_report(['CRWD'])
+# test_store()
+make_print_report(['RUN'])
 end = time.time()
 print('finished')
 print('program took:',(end - start) * 1000, 'milliseconds')
