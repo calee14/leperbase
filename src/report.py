@@ -36,6 +36,7 @@ def build_report(ticker) -> CompanyReport:
     
     report = CompanyReport(ticker, report_date, income_report, earnings_report)
     
+    # store report after scraping
     store_report(report)
 
     return report
@@ -156,15 +157,23 @@ def make_print_report(tickers: list[str]):
     for ticker in tickers:
         # start timer
         start = time.time()
-        # builds report for ticker
-        report: CompanyReport = build_report(ticker)
-        reports.append(report) 
+        try:
+            # builds report for ticker
+            report: CompanyReport = build_report(ticker)
+            reports.append(report) 
+        except Exception as error:
+            print(f'Error while scraping for {ticker}:')
+            print(error)
+            print('Will attempt to retrieve older reports.')
+            _report = get_report(ticker)
+            if _report.income_report != None:
+                reports.append(_report)
+                print(f'Found an older report for {ticker}')
+            else:
+                print(f'Failed to find a prior report for {ticker}')
         # end timer
         end = time.time()
         print(f'Scraping {ticker} took:', (end - start) * 1000, 'milliseconds')
-
-        # store the report after completing scrape
-        store_report(report)
     
     # make the report and local file
     report_xlsx(reports)
