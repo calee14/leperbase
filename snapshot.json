@@ -50,5 +50,31 @@
         }
       }
     ]
+  },
+  "NET": {
+    "reports": [
+      {
+        "ticker": "NET",
+        "date": "31-Mar-2023",
+        "income_report": {
+          "revq": "212.17M -> 234.52M -> 253.86M -> 274.7M -> 290.18M",
+          "rev_growth": 37,
+          "epsq": "-0.13 -> -0.2 -> -0.13 -> -0.14 -> -0.12",
+          "eps_growth": 8,
+          "fcfq": "(54.95M) -> 6.65M -> 6.13M -> 34.08M -> 20.81M",
+          "fcf_growth": 138,
+          "pegq": "5.75 <- N/A <- N/A <- N/A",
+          "psq": "20.63 <- 16.39 <- 21.85 <- 18.96"
+        },
+        "earnings_report": {
+          "eps_est": "0.03",
+          "eps_act": "0.08",
+          "eps_surprise": 166,
+          "eps_growth_quarter_year_forecast": "158, 157",
+          "rev_growth_quarter_year_forecast": "30, 31",
+          "price_delta": 59
+        }
+      }
+    ]
   }
 }
