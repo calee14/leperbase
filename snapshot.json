@@ -76,5 +76,31 @@
         }
       }
     ]
+  },
+  "TSLA": {
+    "reports": [
+      {
+        "ticker": "TSLA",
+        "date": "31-Mar-2023",
+        "income_report": {
+          "revq": "18.76B -> 16.93B -> 21.45B -> 24.32B -> 23.33B",
+          "rev_growth": 24,
+          "epsq": "0.95 -> 0.65 -> 0.95 -> 1.07 -> 0.73",
+          "eps_growth": -23,
+          "fcfq": "2.22B -> 621M -> 3.3B -> 1.42B -> 427M",
+          "fcf_growth": -81,
+          "pegq": "1.89 <- 1.08 <- 1.26 <- 1.64",
+          "psq": "8.85 <- 5.68 <- 13.55 <- 12.29"
+        },
+        "earnings_report": {
+          "eps_est": "0.85",
+          "eps_act": "0.85",
+          "eps_surprise": 0,
+          "eps_growth_quarter_year_forecast": "12, -3",
+          "rev_growth_quarter_year_forecast": "44, 22",
+          "price_delta": 63
+        }
+      }
+    ]
   }
 }

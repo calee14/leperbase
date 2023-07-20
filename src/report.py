@@ -169,6 +169,13 @@ def make_print_report(tickers: list[str]):
     # make the report and local file
     report_xlsx(reports)
 
+def print_report(tickers: list[str]):
+    reports: list[CompanyReport] = []
+    for ticker in tickers:
+        _report = get_report(ticker)
+        if _report.income_report != None:
+            reports.append(_report)
+    report_xlsx(reports)
         
 def test_store():
     income_report = {'revq': '487.83M -> 535.15M -> 580.88M -> 637.37M -> 692.58M', 'rev_growth': 42, 'epsq': '-0.14 -> -0.21 -> -0.24 -> -0.2 -> 0.0', 'eps_growth': 100, 'fcfq': '159.74M -> 138.25M -> 176.41M -> 212.85M -> 230.93M', 'fcf_growth': 45, 'pegq': '1.61 <- 1.22 <- 2.19 <- 3.79 <- 4.63', 'psq': '12.49 <- 12.06 <- 20.25 <- 25.68 <- 31.10'}
