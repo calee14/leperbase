@@ -4,6 +4,7 @@ from src.models.IncomeReport import IncomeReport
 import json
 import os
 import shutil
+import traceback
 
 def store_report(report: CompanyReport):
     '''
@@ -42,6 +43,7 @@ def store_report(report: CompanyReport):
 
     except Exception as e:
         print("Error occurred:", str(e))
+        traceback.print_exc()
         # Handle the error gracefully without modifying the original file
 
         # Cleanup the temporary file if it exists

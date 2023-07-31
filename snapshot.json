@@ -100,6 +100,28 @@
           "rev_growth_quarter_year_forecast": "44, 22",
           "price_delta": 63
         }
+      },
+      {
+        "ticker": "TSLA",
+        "date": "30-Jun-2023",
+        "income_report": {
+          "revq": "16.93B -> 21.45B -> 24.32B -> 23.33B -> 24.93B",
+          "rev_growth": 47,
+          "epsq": "0.65 -> 0.95 -> 1.07 -> 0.73 -> 0.78",
+          "eps_growth": 20,
+          "fcfq": "621M -> 3.3B -> 1.42B -> 427M -> 1.01B",
+          "fcf_growth": 63,
+          "pegq": "2.89 <- 1.89 <- 1.08 <- 1.26 <- 1.64",
+          "psq": "10.57 <- 8.85 <- 5.68 <- 13.55 <- 12.29"
+        },
+        "earnings_report": {
+          "eps_est": "0.75",
+          "eps_act": "0.82",
+          "eps_surprise": 9,
+          "eps_growth_quarter_year_forecast": "-6, -13",
+          "rev_growth_quarter_year_forecast": "4, 11",
+          "price_delta": 40
+        }
       }
     ]
   }

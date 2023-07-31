@@ -6,6 +6,7 @@ from .util import *
 import time
 import csv
 import pandas as pd
+import traceback
 
 def build_report(ticker) -> CompanyReport:
     '''
@@ -164,6 +165,7 @@ def make_print_report(tickers: list[str]):
         except Exception as error:
             print(f'Error while scraping for {ticker}:')
             print(error)
+            traceback.print_exc()
             print('Will attempt to retrieve older reports.')
             _report = get_report(ticker)
             if _report.income_report != None:
