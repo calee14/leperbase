@@ -22,6 +22,29 @@
           "rev_growth_quarter_year_forecast": "35, 35",
           "price_delta": 52
         }
+      },
+      {
+        "ticker": "CRWD",
+        "date": "31-Oct-2023",
+        "income_report": {
+          "revq": "580.88M -> 637.37M -> 692.58M -> 731.63M -> 786.01M",
+          "rev_growth": 35,
+          "epsq": "-0.24 -> -0.2 -> 0.0 -> 0.04 -> 0.11",
+          "eps_growth": 146,
+          "fcfq": "174.08M -> 209.53M -> 227.73M -> 189.29M -> 239.62M",
+          "fcf_growth": 38,
+          "pegq": "1.51 <- 2.12 <- 1.61 <- 1.22 <- 2.19",
+          "psgq": "0.45457142857142857 <- 0.44457142857142856 <- 0.3568571428571429 <- 0.3445714285714286 <- 0.5785714285714286",
+          "psq": "15.91 <- 15.56 <- 12.49 <- 12.06 <- 20.25"
+        },
+        "earnings_report": {
+          "eps_est": "0.74",
+          "eps_act": "0.82",
+          "eps_surprise": 10,
+          "eps_growth_quarter_year_forecast": "645, 473",
+          "rev_growth_quarter_year_forecast": "31, 37",
+          "price_delta": 72
+        }
       }
     ]
   },

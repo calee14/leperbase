@@ -4,7 +4,7 @@ class IncomeReport(object):
     def __init__(self):
         pass
 
-    def load_data(self, revq, rev_growth, epsq, eps_growth, fcfq, fcf_growth, pegq, psq):
+    def load_data(self, revq, rev_growth, epsq, eps_growth, fcfq, fcf_growth, pegq, psgq, psq):
         self.revq = ' -> '.join(revq)
         self.rev_growth = rev_growth
         epsq = [str(eps_to_float(eps)) for eps in epsq]
@@ -13,6 +13,7 @@ class IncomeReport(object):
         self.fcfq = ' -> '.join(fcfq)
         self.fcf_growth = fcf_growth
         self.pegq = ' <- '.join(pegq)
+        self.psgq = ' <- '.join(psgq)
         self.psq = ' <- '.join(psq)
 
     @classmethod
@@ -25,6 +26,7 @@ class IncomeReport(object):
         new_class.fcfq = j['fcfq']
         new_class.fcf_growth = j['fcf_growth']
         new_class.pegq = j['pegq']
+        new_class.psgq = j.get('pqgq', 'Missing values')
         new_class.psq = j['psq']
 
         return new_class

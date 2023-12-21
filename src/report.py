@@ -17,6 +17,8 @@ def build_report(ticker) -> CompanyReport:
     report_date, revq, rev_growth, epsq, eps_growth = company_income(ticker)
     fcfq, fcf_growth = company_fcf(ticker)
     pegq, psq = company_ratios(ticker)
+    # calculate price/sales/growth manually
+    psgq = [str(float(ps) / rev_growth) for ps in psq]
     revy, epsy = prior_annual_stats(ticker)
 
     # earnings financial report
@@ -26,7 +28,7 @@ def build_report(ticker) -> CompanyReport:
     
     income_report = IncomeReport()
     income_report.load_data(revq, rev_growth, 
-                            epsq, eps_growth, fcfq, fcf_growth, pegq, psq)
+                            epsq, eps_growth, fcfq, fcf_growth, pegq, psgq, psq)
 
     # build earnings report, calc forecast percentage change
     # by using getting last fiscal year's eps and rev
@@ -55,6 +57,7 @@ def report_xlsx(reports: list[CompanyReport]):
         'FCF': [], 
         'FCF Growth (%)': [], 
         'Price/Earnings/Growth': [], 
+        'Price/Sales/Growth': [],
         'Price/Sales': []
     }
 
@@ -80,6 +83,7 @@ def report_xlsx(reports: list[CompanyReport]):
         income_data['FCF'].append(income_report.fcfq)
         income_data['FCF Growth (%)'].append(income_report.fcf_growth)
         income_data['Price/Earnings/Growth'].append(income_report.pegq)
+        income_data['Price/Sales/Growth'].append(income_report.psgq)
         income_data['Price/Sales'].append(income_report.psq)
         
         # build the earnings report
