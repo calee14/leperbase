@@ -145,6 +145,56 @@
           "rev_growth_quarter_year_forecast": "4, 11",
           "price_delta": 40
         }
+      },
+      {
+        "ticker": "TSLA",
+        "date": "30-Sep-2023",
+        "income_report": {
+          "revq": "21.45B -> 24.32B -> 23.33B -> 24.93B -> 23.35B",
+          "rev_growth": 9,
+          "epsq": "0.95 -> 1.07 -> 0.73 -> 0.78 -> 0.53",
+          "eps_growth": -44,
+          "fcfq": "3.3B -> 1.42B -> 427M -> 1.01B -> 839M",
+          "fcf_growth": -75,
+          "pegq": "2.13 <- 2.89 <- 1.89 <- 1.08 <- 1.26",
+          "psgq": ":.2f <- :.2f <- :.2f <- :.2f <- :.2f",
+          "psq": "9.25 <- 10.57 <- 8.85 <- 5.68 <- 13.55"
+        },
+        "earnings_report": {
+          "eps_est": "0.66",
+          "eps_act": "0.61",
+          "eps_surprise": -7,
+          "eps_growth_quarter_year_forecast": "39, -12",
+          "rev_growth_quarter_year_forecast": "3, 19",
+          "price_delta": -5
+        }
+      }
+    ]
+  },
+  "DDOG": {
+    "reports": [
+      {
+        "ticker": "DDOG",
+        "date": "30-Sep-2023",
+        "income_report": {
+          "revq": "436.53M -> 469.4M -> 481.71M -> 509.46M -> 547.54M",
+          "rev_growth": 25,
+          "epsq": "-0.08 -> -0.09 -> -0.08 -> -0.01 -> 0.06",
+          "eps_growth": 175,
+          "fcfq": "73.91M -> 104.39M -> 125.05M -> 150.82M -> 146.67M",
+          "fcf_growth": 98,
+          "pegq": "1.31 <- 2.05 <- 1.69 <- 1.12 <- 1.49",
+          "psgq": "0.61 <- 0.70 <- 0.55 <- 0.60 <- 0.85",
+          "psq": "15.30 <- 17.38 <- 13.68 <- 15.07 <- 21.34"
+        },
+        "earnings_report": {
+          "eps_est": "0.34",
+          "eps_act": "0.45",
+          "eps_surprise": 32,
+          "eps_growth_quarter_year_forecast": "633, 1056",
+          "rev_growth_quarter_year_forecast": "21, 25",
+          "price_delta": 22
+        }
       }
     ]
   }
